@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+lickhouse>
+    ogger>
+        evel>information</level>
+    </logger>
+    <http_port>8123</http_port>
+    <tcp_port>9000</tcp_port>
+    <path>/var/lib/clickhouse/</path>
+    <default_database>taxi_db</default_database>
+    sten_host>::</listen_host>
+</clickhouse>

@@ -1,0 +1,20 @@
+# Core data processing - use pre-built wheels
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=12.0.0
+
+# Database drivers
+duckdb>=0.8.0
+clickhouse-driver>=0.4.6
+
+# Utilities
+tqdm>=4.65.0
+python-dotenv>=1.0.0
+
+# For benchmarking and analysis
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Build dependencies
+setuptools>=67.0.0
+wheel>=0.40.0
