@@ -1,0 +1,147 @@
+{
+  "timestamp": "20260306_204950",
+  "database": "DuckDB",
+  "total_records": 1350000,
+  "baseline_results": {
+    "Q1: Daily Revenue Analysis": {
+      "query_name": "Q1: Daily Revenue Analysis",
+      "execution_times": [
+        23.005247116088867,
+        19.5462703704834,
+        20.34306526184082
+      ],
+      "avg_time_ms": 20.964860916137695,
+      "min_time_ms": 19.5462703704834,
+      "max_time_ms": 23.005247116088867
+    },
+    "Q2: Payment Type with Window Functions": {
+      "query_name": "Q2: Payment Type with Window Functions",
+      "execution_times": [
+        38.286685943603516,
+        36.51857376098633,
+        38.62762451171875
+      ],
+      "avg_time_ms": 37.810961405436196,
+      "min_time_ms": 36.51857376098633,
+      "max_time_ms": 38.62762451171875
+    },
+    "Q3: High-Value Trip Analysis": {
+      "query_name": "Q3: High-Value Trip Analysis",
+      "execution_times": [
+        151.66282653808594,
+        149.33228492736816,
+        136.13343238830566
+      ],
+      "avg_time_ms": 145.70951461791992,
+      "min_time_ms": 136.13343238830566,
+      "max_time_ms": 151.66282653808594
+    },
+    "Q4: Vendor Performance": {
+      "query_name": "Q4: Vendor Performance",
+      "execution_times": [
+        45.71819305419922,
+        42.73533821105957,
+        42.24085807800293
+      ],
+      "avg_time_ms": 43.564796447753906,
+      "min_time_ms": 42.24085807800293,
+      "max_time_ms": 45.71819305419922
+    },
+    "Q5: Geo-Spatial Hotspots": {
+      "query_name": "Q5: Geo-Spatial Hotspots",
+      "execution_times": [
+        117.96021461486816,
+        182.56664276123047,
+        163.41900825500488
+      ],
+      "avg_time_ms": 154.64862187703451,
+      "min_time_ms": 117.96021461486816,
+      "max_time_ms": 182.56664276123047
+    }
+  },
+  "optimized_results": {
+    "Q1-OPT: Daily Revenue (Optimized)": {
+      "query_name": "Q1-OPT: Daily Revenue (Optimized)",
+      "execution_times": [
+        31.491518020629883,
+        28.661251068115234,
+        26.214122772216797
+      ],
+      "avg_time_ms": 28.788963953653973,
+      "min_time_ms": 26.214122772216797,
+      "max_time_ms": 31.491518020629883
+    },
+    "Q2-OPT: Payment Type (Optimized)": {
+      "query_name": "Q2-OPT: Payment Type (Optimized)",
+      "execution_times": [
+        48.233985900878906,
+        42.574405670166016,
+        48.38728904724121
+      ],
+      "avg_time_ms": 46.398560206095375,
+      "min_time_ms": 42.574405670166016,
+      "max_time_ms": 48.38728904724121
+    },
+    "Q3-OPT: High-Value Trips (Optimized)": {
+      "query_name": "Q3-OPT: High-Value Trips (Optimized)",
+      "execution_times": [
+        39.73841667175293,
+        30.524015426635742,
+        35.26043891906738
+      ],
+      "avg_time_ms": 35.174290339152016,
+      "min_time_ms": 30.524015426635742,
+      "max_time_ms": 39.73841667175293
+    },
+    "Q4-OPT: Vendor Performance (Optimized)": {
+      "query_name": "Q4-OPT: Vendor Performance (Optimized)",
+      "execution_times": [
+        52.91390419006348,
+        48.71559143066406,
+        53.73811721801758
+      ],
+      "avg_time_ms": 51.7892042795817,
+      "min_time_ms": 48.71559143066406,
+      "max_time_ms": 53.73811721801758
+    },
+    "Q5-OPT: Geo-Spatial Hotspots (Optimized)": {
+      "query_name": "Q5-OPT: Geo-Spatial Hotspots (Optimized)",
+      "execution_times": [
+        120.19085884094238,
+        119.75693702697754,
+        149.8119831085205
+      ],
+      "avg_time_ms": 129.91992632548013,
+      "min_time_ms": 119.75693702697754,
+      "max_time_ms": 149.8119831085205
+    }
+  },
+  "comparison": {
+    "Q1: Daily Revenue Analysis": {
+      "baseline_ms": 20.964860916137695,
+      "optimized_ms": 28.788963953653973,
+      "improvement_pct": -37.32008081910849
+    },
+    "Q2: Payment Type with Window Functions": {
+      "baseline_ms": 37.810961405436196,
+      "optimized_ms": 46.398560206095375,
+      "improvement_pct": -22.711929243419117
+    },
+    "Q3: High-Value Trip Analysis": {
+      "baseline_ms": 145.70951461791992,
+      "optimized_ms": 35.174290339152016,
+      "improvement_pct": 75.85999072786278
+    },
+    "Q4: Vendor Performance": {
+      "baseline_ms": 43.564796447753906,
+      "optimized_ms": 51.7892042795817,
+      "improvement_pct": -18.878563662500085
+    },
+    "Q5: Geo-Spatial Hotspots": {
+      "baseline_ms": 154.64862187703451,
+      "optimized_ms": 129.91992632548013,
+      "improvement_pct": 15.990246308962822
+    }
+  },
+  "overall_improvement_pct": 27.471604695603407
+}

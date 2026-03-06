@@ -1,0 +1,128 @@
+# ============================================================================
+# SUBMISSION ORCHESTRATION FILE
+# ============================================================================
+# Purpose: Automated execution of entire project pipeline
+# Usage: This file defines all steps from environment setup to results
+# Critical: Evaluators will run this file to verify your project
+
+project_name: "Optimize Analytical Query Performance with DuckDB and ClickHouse"
+version: "1.0.0"
+author: "Manoj Kumar Doddi"
+
+# ============================================================================
+# PHASE 1: ENVIRONMENT SETUP
+# ============================================================================
+phase_1_setup:
+  name: "Environment Setup & Dependencies"
+  description: "Install required Python libraries and prepare environment"
+  steps:
+    - name: "Install Python Dependencies"
+      command: "pip install -r requirements.txt"
+      description: "Installs: pandas, pyarrow, duckdb, clickhouse-connect, pyyaml"
+      
+    - name: "Verify Docker Installation"
+      command: "docker --version && docker-compose --version"
+      description: "Ensures Docker and Docker Compose are installed"
+
+# ============================================================================
+# PHASE 2: DATA GENERATION
+# ============================================================================
+phase_2_data_generation:
+  name: "Synthetic Data Generation"
+  description: "Generate NYC Taxi synthetic dataset (100K-200K records/month)"
+  steps:
+    - name: "Generate Synthetic Data"
+      command: "python scripts/01_generate_data.py"
+      description: |
+        Generates synthetic NYC Taxi data:
+        - 100K-200K records per month (~1-2GB total)
+        - Realistic distributions
+        - Outputs to data/synthetic_taxi_data.parquet
+      expected_output: "data/synthetic_taxi_data.parquet"
+      
+    - name: "Verify Data Generation"
+      command: "python -c \"import pandas as pd; df = pd.read_parquet('data/synthetic_taxi_data.parquet'); print(f'Generated {len(df)} records')\""
+      description: "Validate synthetic data was created successfully"
+
+# ============================================================================
+# PHASE 3: DATABASE INITIALIZATION
+# ============================================================================
+phase_3_database_setup:
+  name: "Database Initialization"
+  description: "Start ClickHouse and prepare both databases"
+  steps:
+    - name: "Start ClickHouse via Docker Compose"
+      command: "docker-compose up -d"
+      description: |
+        Starts ClickHouse in Docker container
+        - Runs on port 8123 (HTTP)
+        - Runs on port 9000 (TCP)
+      working_directory: "."
+      
+    - name: "Wait for ClickHouse Startup"
+      command: "python -c \"import time; time.sleep(15)\""
+      description: "Wait 15 seconds for ClickHouse to be ready"
+      
+    - name: "Verify ClickHouse Connection"
+      command: "python -c \"from clickhouse_driver import Client; c = Client('localhost'); print(c.execute('SELECT 1'))\""
+      description: "Test connection to ClickHouse server"
+
+# ============================================================================
+# PHASE 4: BASELINE SCHEMA & DATA INGESTION
+# ============================================================================
+phase_4_baseline_ingestion:
+  name: "Baseline Schema Creation & Data Ingestion"
+  description: "Create baseline tables and ingest data into both databases"
+  steps:
+    - name: "Create Baseline Schemas"
+      command: "python scripts/02_ingest_data.py --schema-only"
+      description: |
+        Creates baseline tables in DuckDB and ClickHouse
+        - DuckDB: taxi_data table (unoptimized)
+        - ClickHouse: taxi_db.taxi_data table (simple ORDER BY)
+      
+    - name: "Ingest Data into DuckDB"
+      command: "python scripts/02_ingest_data.py --duckdb"
+      description: |
+        Loads Parquet data into DuckDB
+        - Connection: In-memory database
+        - Table: taxi_data
+        - Rows: ~1.35M total
+      
+    - name: "Ingest Data into ClickHouse"
+      command: "python scripts/02_ingest_data.py --clickhouse"
+      description: |
+        Loads Parquet data into ClickHouse
+        - Connection: http://localhost:8123
+        - Table: taxi_db.taxi_data
+        - Rows: ~1.35M total
+      
+    - name: "Verify Data Ingestion"
+      command: "python -c \"import duckdb; conn = duckdb.connect('taxi.duckdb'); print(conn.execute('SELECT COUNT(*) FROM taxi_data').fetchall())\""
+      description: "Verify data loaded successfully in DuckDB"
+
+# ============================================================================
+# PHASE 5: BASELINE PERFORMANCE PROFILING
+# ============================================================================
+phase_5_baseline_benchmark:
+  name: "Baseline Performance Profiling"
+  description: "Measure query performance on unoptimized tables"
+  steps:
+    - name: "Run Baseline Benchmark"
+      command: "python scripts/03_baseline_benchmark.py"
+      description: |
+        Executes 5 analytical queries on baseline tables
+        - Measures latency (execution time in ms)
+        - Records results: reports/baseline_metrics.csv
+        - Expected: Each query takes 1000-3000ms
+      expected_output: "reports/baseline_metrics.csv"
+      
+    - name: "Display Baseline Results"
+      command: "python -c \"import pandas as pd; df = pd.read_csv('reports/baseline_metrics.csv'); print(df)\""
+      description: "Show baseline performance metrics"
+
+# ============================================================================
+# PHASE 6: SCHEMA OPTIMIZATION
+# ============================================================================
+phase_6_schema_optimization:
+  name: "ClickHouse Schema Optimization

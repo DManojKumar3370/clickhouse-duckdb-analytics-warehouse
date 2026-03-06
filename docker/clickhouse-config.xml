@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
 lickhouse>
+    <!-- Performance tuning for analytical queries -->
+    <max_memory_usage>8000000000</max_memory_usage>
+    <max_memory_usage_for_user>8000000000</max_memory_usage_for_user>
+    
+    <!-- Connection settings -->
+    sten_host>::</listen_host>
+    
+    <!-- Logging -->
     ogger>
         evel>information</level>
+        og>/var/log/clickhouse-server/clickhouse-server.log</log>
+        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
     </logger>
-    <http_port>8123</http_port>
-    <tcp_port>9000</tcp_port>
-    <path>/var/lib/clickhouse/</path>
-    <default_database>taxi_db</default_database>
-    sten_host>::</listen_host>
 </clickhouse>
